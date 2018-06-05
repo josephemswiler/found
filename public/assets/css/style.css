@@ -18,7 +18,7 @@ body {
 }
 
 body {
-    padding-top: 80px;
+    padding-top: 86px;
     background: var(--blue);
     font-family: var(--font);
 }
@@ -56,12 +56,8 @@ body {
     z-index: 3;
 }
 
-.home-result-card {
-    border-radius: 20px;
-}
-
 .btn-pill {
-    border-radius: 20px;
+    border-radius: 30px;
 }
 
 .btn-primary {
@@ -72,4 +68,12 @@ body {
 .btn-danger {
     background: var(--red);
     border: var(--red);
+}
+
+.inner-card-img, .card-img-top {
+    border-radius: 20px;
+}
+
+.outer-card {
+    border: none;
 }
