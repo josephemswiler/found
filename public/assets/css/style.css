@@ -1,0 +1,75 @@
+@import url('https://fonts.googleapis.com/css?family=Comfortaa|Nunito:400i');
+:root {
+    --pink: #FDA7DF;
+    --aqua: #12CBC4;
+    --red: #EE5A24;
+    --gold: #FFC312;
+    --grey: #E5E5E5;
+    --blue: #1B1464;
+    --white: #ffffff;
+    --font: 'Comfortaa', sans-serif;
+    --brand: 'Nunito', sans-serif;
+}
+
+html,
+body {
+    height: auto;
+    min-height: 100vh;
+}
+
+body {
+    padding-top: 80px;
+    background: var(--blue);
+    font-family: var(--font);
+}
+
+.navbar-light {
+    background: var(--pink) !important;
+}
+
+.navbar-brand {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    font-family: var(--brand);
+    color: var(--white) !important;
+    font-size: 25px;
+    letter-spacing: 4px;
+    line-height: 43px;
+}
+
+
+.nav-link {
+    color: var(--white) !important;
+    font-size: 25px;
+    margin-right: .1em;
+}
+
+.navbar-nav {
+    z-index: 3;
+}
+
+.navbar-toggler {
+    border: none;
+    font-size: 25px;
+    color: var(--white) !important;
+    z-index: 3;
+}
+
+.home-result-card {
+    border-radius: 20px;
+}
+
+.btn-pill {
+    border-radius: 20px;
+}
+
+.btn-primary {
+    background: var(--aqua);
+    border: var(--aqua);
+}
+
+.btn-danger {
+    background: var(--red);
+    border: var(--red);
+}
