@@ -26,6 +26,9 @@ let ItemSchema = new Schema({
   altImg: {
     type: String,
   },
+  description: {
+    type: String,
+  },
   talk: {
     type: Schema.Types.ObjectId,
     ref: "Talk"

@@ -6,7 +6,7 @@ module.exports = function (app) {
 
     app.get('/scrape', function (req, res) {
 
-        axios.get('http://needsupply.com/womens/shoes?p=2').then(function (response) {
+        axios.get('http://needsupply.com/womens/shoes?p=1').then(function (response) {
 
             let $ = cheerio.load(response.data)
 
@@ -27,30 +27,44 @@ module.exports = function (app) {
                     .find('.alternate-image')
                     .attr('data-src')
 
-                db.Item.create(item)
-                    .then(function (dbItem) {
-                        items.push(dbItem)
-                    })
-                    .catch(err => res.json(err))
-            })
-            res.json(items)
-        })
-    })
-    // /scrape
+                axios.get(item.url).then(function (response) {
 
-    //Load main page
+                    let $ = cheerio.load(response.data)
+
+                    item.description = $('.description').text().trim()
+
+                    db.Item.create(item)
+                        .then(function (dbItem) {})
+                        .catch(err => res.json(err))
+                })
+            })
+        })
+        db.Item.find({})
+            .then(function (items) {
+                res.json(items)
+            })
+            .catch(err => res.json(err))
+    })
+
 
     app.get('/', function (req, res) {
         res.render('profile')
     })
 
     app.get('/index', function (req, res) {
-        res.render('index')
+        db.Item.find({})
+            .then(function (items) {
+                console.log(items)
+                res.render('index', {
+                    items: items
+                })
+            })
+            .catch(err => res.json(err))
     })
 
     app.get('/about', function (req, res) {
         res.render('about')
     })
 
-    
+
 }

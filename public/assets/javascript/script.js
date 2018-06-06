@@ -56,6 +56,10 @@ $(window).resize(function () {
 
 $(document).on('click', '.talk-btn', function () {
 
+    let cardId = $(this).closest('.outer-card').attr('data-id')
+
+    $(`[data-id="talk-${cardId}"]`)
+
     $(this).closest('.outer-card').removeClass('unselected-item').addClass('selected')
     $('.unselected-item').fadeOut()
 
