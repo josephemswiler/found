@@ -15,6 +15,7 @@ html,
 body {
     height: auto;
     min-height: 100vh;
+    font-size: 12px;
 }
 
 body {
@@ -37,7 +38,6 @@ body {
     letter-spacing: 4px;
     line-height: 43px;
 }
-
 
 .nav-link {
     color: var(--white) !important;
@@ -70,10 +70,59 @@ body {
     border: var(--red);
 }
 
-.inner-card-img, .card-img-top {
+.inner-card-img,
+.card-img-top,
+.talk-card,
+.talk-card-header {
     border-radius: 20px;
+}
+
+.talk-card-header {
+    height: 70px;
+    line-height: 50px;
+    font-size: 20px;
+    color: var(--blue);
+    letter-spacing: 4px;
 }
 
 .outer-card {
     border: none;
+}
+
+.close-talk {
+    position: absolute;
+    font-size: 25px;
+    right: 0;
+    letter-spacing: 0;
+    line-height: 55px;
+}
+
+.text-red {
+    color: var(--red);
+}
+
+.talk-block {
+    border-radius: 20px;
+    background: var(--grey);
+    color: var(--blue);
+    padding: 10px 25px 10px 25px;
+    font-size: 14px;
+}
+.talk-input {
+    border-radius: 20px;
+    color: var(--blue);
+    padding: 10px 25px 10px 25px;
+    font-size: 14px;
+}
+
+.form-group {
+    margin: 0;
+}
+
+.bg-pink {
+    background: var(--pink);
+}
+
+.outer-talk-card {
+    min-height: 100%;
 }
