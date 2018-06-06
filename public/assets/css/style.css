@@ -70,11 +70,22 @@ body {
     border: var(--red);
 }
 
+.btn-warning {
+    background: var(--gold);
+    border: var(--gold);
+    color: var(--blue);
+}
+
 .inner-card-img,
 .card-img-top,
 .talk-card,
 .talk-card-header {
     border-radius: 20px;
+}
+
+.talk-history {
+    overflow: auto;
+    height: 100%;
 }
 
 .talk-card-header {
@@ -125,4 +136,9 @@ body {
 
 .outer-talk-card {
     min-height: 100%;
+}
+
+.outer-talk-card,
+.back-col {
+    display: none;
 }
