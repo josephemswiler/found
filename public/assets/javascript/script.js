@@ -35,13 +35,14 @@ function setHeight() {
     let targetHeight = $(window).height() - 86
     $('.body-wrapper').css('height', targetHeight)
     $('.outer-card').css('max-height', targetHeight)
-    shopHeight($('.shop-btn'))
+    if (actionOpen)
+        shopHeight($('.selected').attr('data-id'))
     return targetHeight
 }
 
 $(window).resize(function () {
     setHeight()
-    talkHeight($('.talk-btn'))
+    talkHeight($('.selected').attr('data-id'))
     if (actionOpen) {
         if ($(window).width() > 767) {
             $('.selected').fadeIn()
@@ -56,10 +57,6 @@ $(window).resize(function () {
 
 $(document).on('click', '.talk-btn', function () {
 
-    let cardId = $(this).closest('.outer-card').attr('data-id')
-
-    $(`[data-id="talk-${cardId}"]`)
-
     $(this).closest('.outer-card').removeClass('unselected-item').addClass('selected')
     $('.unselected-item').fadeOut()
 
@@ -69,39 +66,40 @@ $(document).on('click', '.talk-btn', function () {
         smScreen()
     }
 
-    talkHeight($(this))
+    let cardId = $(this).closest('.outer-card').attr('data-id')
+
+    talkHeight(cardId)
 
     $(this).closest('.row').children('.action-col').fadeOut(function () {
         $(this).closest('.row').find('.back-col').fadeIn()
     })
 
-    $(this).closest('.top-row').find('.outer-talk-card').fadeIn()
+    $(`[data-id="talk-${cardId}"]`).fadeIn()
 
-    $(this).closest('.top-row').find('.talk-input').focus().select()
+    $(`[data-id="talk-${cardId}"]`).find('.talk-input').focus().select()
 
-    let history = $(this).closest('.top-row').find('.talk-history')
+    let history = $(`[data-id="talk-${cardId}"]`).find('.talk-history')
 
     history.animate({
         scrollTop: history.prop('scrollHeight')
     }, 300)
 })
 
-function talkHeight(button) {
+function talkHeight(cardId) {
     let targetHeight = setHeight()
 
-    button.closest('.top-row').css('height', targetHeight)
+    $('.top-row').css('height', targetHeight)
 
-    button.closest('.top-row').find('.talk-card').css('max-height', targetHeight - 76)
+    $(`[data-id="talk-${cardId}"]`).find('.talk-card').css('max-height', targetHeight - 76)
 
-    button.closest('.top-row').find('.outer-talk-card').css('height', targetHeight)
+    $(`[data-id="talk-${cardId}"]`).find('.outer-talk-card').css('height', targetHeight)
 
-    let history = button.closest('.top-row').find('.talk-history')
+    let history = $(`[data-id="talk-${cardId}"]`).find('.talk-history')
 
     history.animate({
         scrollTop: history.prop('scrollHeight')
     }, 300)
 }
-
 
 $(document).on('click', '.add-talk-btn', function () {
     sumbitTalk($(this))
@@ -166,9 +164,11 @@ $(document).on('click', '.close-action', function () {
 
 $(document).on('click', '.shop-btn', function () {
 
-    console.log($('[data-position="1"]').position())
+    // console.log($('[data-position="1"]').position())
 
-    console.log($('[data-position="2"]').position())
+    // console.log($('[data-position="2"]').position())
+
+    let cardId = $(this).closest('.outer-card').attr('data-id')
 
     $(this).closest('.outer-card').removeClass('unselected-item').addClass('selected')
     $('.unselected-item').fadeOut()
@@ -179,29 +179,29 @@ $(document).on('click', '.shop-btn', function () {
         smScreen()
     }
 
-    shopHeight($(this))
+    shopHeight(cardId)
 
     $(this).closest('.row').children('.action-col').fadeOut(function () {
         $(this).closest('.row').find('.back-col').fadeIn()
     })
 
-    $(this).closest('.top-row').find('.outer-shop-card').fadeIn()
+    $(`[data-id="shop-${cardId}"]`).fadeIn()
 })
 
-function shopHeight(button) {
+function shopHeight(cardId) {
 
     if ($('.selected').css('display') === 'none')
         return
 
-    let targetHeight = button.closest('.outer-card').find('.inner-card-img')[0].offsetHeight
+    let targetHeight = $(`[data-id="${cardId}"]`).find('.inner-card-img')[0].offsetHeight
 
-    let outerTargetHeight = button.closest('.outer-card').height()
+    let outerTargetHeight = $(`[data-id="${cardId}"]`).height()
 
-    button.closest('.top-row').find('.shop-card').css('height', targetHeight)
+    $(`[data-id="shop-${cardId}"]`).find('.shop-card').css('height', targetHeight)
 
-    button.closest('.top-row').find('.outer-shop-card').css('height', outerTargetHeight)
+    $(`[data-id="shop-${cardId}"]`).css('height', outerTargetHeight)
 }
 
 function smScreen() {
-    $('.outer-card').fadeOut()
+    $('.selected').fadeOut()
 }
