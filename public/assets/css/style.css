@@ -82,6 +82,10 @@ body {
     color: var(--blue);
 }
 
+.text-blue {
+    color: var(--blue);
+}
+
 .inner-card-img,
 .card-img-top,
 .talk-card,

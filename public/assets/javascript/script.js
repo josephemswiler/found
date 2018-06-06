@@ -5,13 +5,28 @@ $(function () {
     $('html, body').animate({
         scrollTop: 0
     })
-    setHeight()
+
     $(window).keydown(function (event) {
         if (event.keyCode == 13) {
             event.preventDefault()
             sumbitTalk($('.add-talk-btn'))
         }
-    });
+    })
+
+    $('.nav-link').children('i').removeClass('text-blue')
+
+    switch (window.location.pathname) {
+        case '/':
+            $('[data-path="profile"]').addClass('text-blue')
+            break
+        case '/index':
+            $('[data-path="index"]').addClass('text-blue')
+            setHeight()
+            break
+        case '/about':
+            $('[data-path="about"]').addClass('text-blue')
+            break
+    }
 })
 
 //Dynamically set max-height of list based on window size

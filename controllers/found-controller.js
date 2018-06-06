@@ -36,4 +36,21 @@ module.exports = function (app) {
             res.json(items)
         })
     })
+    // /scrape
+
+    //Load main page
+
+    app.get('/', function (req, res) {
+        res.render('profile')
+    })
+
+    app.get('/index', function (req, res) {
+        res.render('index')
+    })
+
+    app.get('/about', function (req, res) {
+        res.render('about')
+    })
+
+    
 }
