@@ -1,3 +1,5 @@
+let actionOpen = false
+
 $(function () {
     $('[data-toggle="tooltip"]').tooltip()
     $('html, body').animate({
@@ -17,6 +19,7 @@ $(function () {
 function setHeight() {
     let targetHeight = $(window).height() - 86
     $('.body-wrapper').css('height', targetHeight)
+    $('.outer-card').css('max-height', targetHeight)
     shopHeight($('.shop-btn'))
     return targetHeight
 }
@@ -24,12 +27,28 @@ function setHeight() {
 $(window).resize(function () {
     setHeight()
     talkHeight($('.talk-btn'))
+    if (actionOpen) {
+        if ($(window).width() > 767) {
+            $('.selected').fadeIn()
+        } else {
+            $('.selected').fadeOut()
+        }
+    }
 })
 
 //Talk screen
 //-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-//
 
 $(document).on('click', '.talk-btn', function () {
+
+    $(this).closest('.outer-card').removeClass('unselected-item').addClass('selected')
+    $('.unselected-item').fadeOut()
+
+    actionOpen = true
+
+    if ($(window).width() <= 767) {
+        smScreen()
+    }
 
     talkHeight($(this))
 
@@ -40,6 +59,12 @@ $(document).on('click', '.talk-btn', function () {
     $(this).closest('.top-row').find('.outer-talk-card').fadeIn()
 
     $(this).closest('.top-row').find('.talk-input').focus().select()
+
+    let history = $(this).closest('.top-row').find('.talk-history')
+
+    history.animate({
+        scrollTop: history.prop('scrollHeight')
+    }, 300)
 })
 
 function talkHeight(button) {
@@ -96,6 +121,11 @@ $(document).on('click', '.back-btn', function () {
     $(this).parent().fadeOut(function () {
         $(this).closest('.top-row').find('.action-col').fadeIn()
     })
+    $(this).closest('.outer-card').removeClass('selected').addClass('unselected-item')
+    $('.unselected-item').fadeIn()
+    actionOpen = false
+    if ($('.outer-card').css('display') === 'none')
+        $('.outer-card').fadeIn()
 })
 
 $(document).on('click', '.close-action', function () {
@@ -104,12 +134,31 @@ $(document).on('click', '.close-action', function () {
     $('.back-btn').parent().fadeOut(function () {
         $(this).closest('.top-row').find('.action-col').fadeIn()
     })
+
+    $(this).closest('.top-row').find('.selected').removeClass('selected').addClass('unselected-item')
+    $('.unselected-item').fadeIn()
+    actionOpen = false
+    if ($('.outer-card').css('display') === 'none')
+        $('.outer-card').fadeIn()
 })
 
 //Shop screen
 //-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-//
 
 $(document).on('click', '.shop-btn', function () {
+
+    console.log($('[data-position="1"]').position())
+
+    console.log($('[data-position="2"]').position())
+
+    $(this).closest('.outer-card').removeClass('unselected-item').addClass('selected')
+    $('.unselected-item').fadeOut()
+
+    actionOpen = true
+
+    if ($(window).width() <= 767) {
+        smScreen()
+    }
 
     shopHeight($(this))
 
@@ -122,6 +171,9 @@ $(document).on('click', '.shop-btn', function () {
 
 function shopHeight(button) {
 
+    if ($('.selected').css('display') === 'none')
+        return
+
     let targetHeight = button.closest('.outer-card').find('.inner-card-img')[0].offsetHeight
 
     let outerTargetHeight = button.closest('.outer-card').height()
@@ -129,5 +181,8 @@ function shopHeight(button) {
     button.closest('.top-row').find('.shop-card').css('height', targetHeight)
 
     button.closest('.top-row').find('.outer-shop-card').css('height', outerTargetHeight)
+}
 
+function smScreen() {
+    $('.outer-card').fadeOut()
 }
