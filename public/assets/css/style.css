@@ -36,13 +36,13 @@ body {
     color: var(--white) !important;
     font-size: 25px;
     letter-spacing: 4px;
-    line-height: 43px;
 }
 
 .nav-link {
     color: var(--white) !important;
     font-size: 25px;
     margin-right: .1em;
+    padding: 0;
 }
 
 .navbar-nav {
@@ -54,6 +54,7 @@ body {
     font-size: 25px;
     color: var(--white) !important;
     z-index: 3;
+    height: 37px;
 }
 
 .btn-pill {
@@ -76,19 +77,32 @@ body {
     color: var(--blue);
 }
 
+.btn-light {
+    background: var(--grey);
+    color: var(--blue);
+}
+
 .inner-card-img,
 .card-img-top,
 .talk-card,
-.talk-card-header {
+.talk-card-header,
+.shop-card,
+.shop-card-header {
     border-radius: 20px;
 }
 
-.talk-history {
+
+
+.talk-history,
+.shop-details {
     overflow: auto;
     height: 100%;
 }
 
-.talk-card-header {
+
+
+.talk-card-header,
+.shop-card-header {
     height: 70px;
     line-height: 50px;
     font-size: 20px;
@@ -100,7 +114,8 @@ body {
     border: none;
 }
 
-.close-talk {
+.close-talk,
+.close-shop {
     position: absolute;
     font-size: 25px;
     right: 0;
@@ -112,13 +127,29 @@ body {
     color: var(--red);
 }
 
-.talk-block {
+.talk-block,
+.price-block {
     border-radius: 20px;
     background: var(--grey);
     color: var(--blue);
     padding: 10px 25px 10px 25px;
     font-size: 14px;
 }
+
+.price-block {
+
+}
+
+.text-lg {
+    font-size: 25px;
+    font-family: var(--brand)
+}
+
+.text-md {
+    font-size: 20px;
+    font-family: var(--brand);
+}
+
 .talk-input {
     border-radius: 20px;
     color: var(--blue);
@@ -139,6 +170,7 @@ body {
 }
 
 .outer-talk-card,
+.outer-shop-card,
 .back-col {
     display: none;
 }

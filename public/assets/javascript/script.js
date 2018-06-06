@@ -17,31 +17,46 @@ $(function () {
 function setHeight() {
     let targetHeight = $(window).height() - 86
     $('.body-wrapper').css('height', targetHeight)
+    shopHeight($('.shop-btn'))
     return targetHeight
 }
 
 $(window).resize(function () {
     setHeight()
+    talkHeight($('.talk-btn'))
 })
 
 //Talk screen
 //-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-//
 
 $(document).on('click', '.talk-btn', function () {
-    let targetHeight = setHeight()
 
-    $(this).closest('.top-row').css('height', targetHeight)
+    talkHeight($(this))
 
     $(this).closest('.row').children('.action-col').fadeOut(function () {
         $(this).closest('.row').find('.back-col').fadeIn()
     })
 
-    $(this).closest('.top-row').find('.talk-card').css('max-height', targetHeight - 76)
-
-    $(this).closest('.top-row').find('.outer-talk-card').css('height', targetHeight).fadeIn()
+    $(this).closest('.top-row').find('.outer-talk-card').fadeIn()
 
     $(this).closest('.top-row').find('.talk-input').focus().select()
 })
+
+function talkHeight(button) {
+    let targetHeight = setHeight()
+
+    button.closest('.top-row').css('height', targetHeight)
+
+    button.closest('.top-row').find('.talk-card').css('max-height', targetHeight - 76)
+
+    button.closest('.top-row').find('.outer-talk-card').css('height', targetHeight)
+
+    let history = button.closest('.top-row').find('.talk-history')
+
+    history.animate({
+        scrollTop: history.prop('scrollHeight')
+    }, 300)
+}
 
 
 $(document).on('click', '.add-talk-btn', function () {
@@ -78,7 +93,41 @@ function sumbitTalk(button) {
 $(document).on('click', '.back-btn', function () {
     $('.outer-talk-card').fadeOut()
     $('.outer-shop-card').fadeOut()
-    $(this).fadeOut(function () {
-        $(this).closest('.row').children('.action-col').fadeIn()
+    $(this).parent().fadeOut(function () {
+        $(this).closest('.top-row').find('.action-col').fadeIn()
     })
 })
+
+$(document).on('click', '.close-action', function () {
+    $('.outer-talk-card').fadeOut()
+    $('.outer-shop-card').fadeOut()
+    $('.back-btn').parent().fadeOut(function () {
+        $(this).closest('.top-row').find('.action-col').fadeIn()
+    })
+})
+
+//Shop screen
+//-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-//
+
+$(document).on('click', '.shop-btn', function () {
+
+    shopHeight($(this))
+
+    $(this).closest('.row').children('.action-col').fadeOut(function () {
+        $(this).closest('.row').find('.back-col').fadeIn()
+    })
+
+    $(this).closest('.top-row').find('.outer-shop-card').fadeIn()
+})
+
+function shopHeight(button) {
+
+    let targetHeight = button.closest('.outer-card').find('.inner-card-img')[0].offsetHeight
+
+    let outerTargetHeight = button.closest('.outer-card').height()
+
+    button.closest('.top-row').find('.shop-card').css('height', targetHeight)
+
+    button.closest('.top-row').find('.outer-shop-card').css('height', outerTargetHeight)
+
+}
