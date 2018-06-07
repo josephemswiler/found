@@ -37,10 +37,10 @@ let ItemSchema = new Schema({
     type: Date,
     default: Date.now
   },
-  talk: {
+  talk: [{
     type: Schema.Types.ObjectId,
     ref: "Talk"
-  }
+  }]
 })
 
 let Item = mongoose.model("Item", ItemSchema)

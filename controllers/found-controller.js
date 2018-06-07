@@ -155,16 +155,13 @@ module.exports = function (app) {
     })
 
     app.post("/api/talk/:id", function (req, res) {
-        db.Talk.create({
-                text: req.body.text,
-                item: req.params.id
-            })
+        db.Talk.create(req.body)
             .then(dbTalk => db.Item.findOneAndUpdate({
                 _id: req.params.id
             }, {
-                // $push: {
+                $push: {
                     talk: dbTalk._id
-                // }
+                }
             }, {
                 new: true
             }))

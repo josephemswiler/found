@@ -269,3 +269,7 @@ body {
 .btn-danger:hover {
     background: #EA2027;
 }
+
+.shoe-btn {
+    border: 4px solid var(--gold);
+}

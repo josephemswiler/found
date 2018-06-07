@@ -10,10 +10,6 @@ let TalkSchema = new Schema({
       text: {
         type: String,
         required: true
-      },
-      item: {
-        type: Schema.Types.ObjectId,
-        ref: 'Item'
       }
 })
 
