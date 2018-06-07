@@ -33,8 +33,14 @@ module.exports = function (app) {
 
                     item.description = $('.description').text().trim()
 
-                    db.Item.create(item)
-                        .then(function (dbItem) {})
+                    db.Item.count({
+                        name: item.name
+                    }).then(count => {
+                        if (count === 0) {
+                            db.Item.create(item)
+                                .then(function (dbItem) {})
+                        }
+                    })
                 })
             })
         })
@@ -74,8 +80,14 @@ module.exports = function (app) {
 
                     item.description = $('.description').text().trim()
 
-                    db.Item.create(item)
-                        .then(function (dbItem) {})
+                    db.Item.count({
+                        name: item.name
+                    }).then(count => {
+                        if (count === 0) {
+                            db.Item.create(item)
+                                .then(function (dbItem) {})
+                        }
+                    })
                 })
             })
         })
@@ -90,9 +102,8 @@ module.exports = function (app) {
         db.Item.find({
                 favorite: true
             })
-            .populate("Talk")
+            .populate("talk")
             .then(function (items) {
-                console.log(items)
                 res.render('profile', {
                     items: items
                 })
@@ -104,9 +115,10 @@ module.exports = function (app) {
         db.Item.find({
                 favorite: true
             })
-            .populate("Talk")
+            .populate("talk").sort({
+                date: -1
+            })
             .then(function (items) {
-                console.log(items)
                 res.render('profile', {
                     items: items
                 })
@@ -118,9 +130,10 @@ module.exports = function (app) {
         db.Item.find({}).sort({
                 dateCreated: -1
             })
-            .populate("Talk")
+            .populate("talk").sort({
+                date: -1
+            })
             .then(function (items) {
-                console.log(items)
                 res.render('index', {
                     items: items
                 })
@@ -128,23 +141,30 @@ module.exports = function (app) {
             .catch(err => res.json(err))
     })
 
-    app.get('/about', function (req, res) {
-        res.render('about')
-    })
-
-    app.post('/api/talk', (req, res) => {
-        db.Talk.create({
-            date: req.body.date,
-            text: req.body.text
-        }).then(data => res.json(data))
+    app.get('/api', function (req, res) {
+        db.Item.find({}).sort({
+                dateCreated: -1
+            })
+            .populate("talk").sort({
+                date: -1
+            })
+            .then(function (items) {
+                res.json(items)
+            })
+            .catch(err => res.json(err))
     })
 
     app.post("/api/talk/:id", function (req, res) {
-        db.Talk.create(req.body)
+        db.Talk.create({
+                text: req.body.text,
+                item: req.params.id
+            })
             .then(dbTalk => db.Item.findOneAndUpdate({
                 _id: req.params.id
             }, {
-                note: dbTalk._id
+                // $push: {
+                    talk: dbTalk._id
+                // }
             }, {
                 new: true
             }))

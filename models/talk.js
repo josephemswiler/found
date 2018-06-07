@@ -5,11 +5,15 @@ let Schema = mongoose.Schema
 let TalkSchema = new Schema({
     date: {
         type: Date,
-        required: true
+        default: Date.now
       },
       text: {
         type: String,
         required: true
+      },
+      item: {
+        type: Schema.Types.ObjectId,
+        ref: 'Item'
       }
 })
 

@@ -23,9 +23,6 @@ $(function () {
             $('[data-path="index"]').addClass('text-blue')
             setHeight()
             break
-        case '/about':
-            $('[data-path="about"]').addClass('text-blue')
-            break
     }
 })
 
@@ -129,12 +126,7 @@ function sumbitTalk(cardId) {
         scrollTop: history.prop('scrollHeight')
     }, 300)
 
-    let postObj = {
-        date: new Date(),
-        text: div.text()
-    }
-
-    $.post(`/api/talk/${cardId}`, postObj)
+    $.post(`/api/talk/${cardId}`, { text: div.text() })
 
     $(`[data-id="talk-${cardId}"]`).find('.talk-input').val('')
 }
@@ -256,7 +248,10 @@ $(document).on('click', '.shoe-btn', function () {
 
 $(document).on('click', '.bag-btn', function () {
     $.get('/search/bags')
-        .then(data => showFound())
+        .then(response => {
+            console.log(response) 
+            showFound()
+        })
 })
 
 function showFound() {
