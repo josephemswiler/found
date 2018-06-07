@@ -1,2 +1,60 @@
  {{> nav }}
- <h1 class='text-danger'>show scrape options, then populate with starred items</h1>
+<div class="container profile-wrapper">
+    <div class="card radius-round bg-aqua mb-3 p-3">
+        <div class="row">
+            <div class="col-md-4 mt-0 mb-md-0 mb-3 pr-md-0">
+                <div class="rounded-circle bg-white text-center">
+                    <div class="card-body p-2">
+                        <img class="profile-photo" src="./assets/images/IMG_4097.jpg" alt="profile photo">
+                    </div>
+                </div>
+            </div>
+            <div class="profile-text-card col-md-8">
+                <div class="radius-round">
+                    <div class="card-body welcome-card text-blue text-justify bg-white mb-3 radius-round">
+                        <div class="col-12">
+                            <h1 class="text-center pb-0 mb-0">Welcome back!</h1>
+                        </div>
+                        <span class="welcome-text">
+                            We've saved all your favorite items below! Click the
+                            <a href="/index">
+                                <i class="fas fa-shopping-bag text-aqua i-lg"></i>
+                            </a> icon above to shop items you've previously
+                            <span class="text-brand text-pink"> FOUND</span> from around the web, or add the latest items from around the web by clicking the
+                            buttons below!
+                        </span>
+                    </div>
+                    <div class="card-body mb-0 pb-0 bg-white radius-round">
+                        <div class="row search-btn-row">
+                            <div class="col-12 mb-1">
+                                <h2 class="text-blue text-center">GET THE LATEST:</h2>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <a href="#" class="btn btn-pill btn-block btn-warning btn-lg shoe-btn p-3">SHOES</a>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <a href="#" class="btn btn-pill btn-block btn-warning btn-lg bag-btn p-3">BAGS</a>
+                            </div>
+                        </div>
+                        <div class="row status-display">
+                            <div class="col-12 pb-3">
+                                <h2 class="text-red text-center">SEARCHING...</h2>
+                            </div>
+                        </div>
+                        <div class="row found-row pb-3">
+                            <div class="col-12">
+                                <h2 class="text-blue text-center">DONE.</h2>
+                            </div>
+                            <div class="col-12">
+                                <a href="/index" class="btn btn-pill btn-block bg-pink text-blue btn-lg found-btn p-3">SEE WHAT YOU
+                                    <span class="text-brand">FOUND</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{{> shop }}

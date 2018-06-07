@@ -5,7 +5,6 @@ let Schema = mongoose.Schema
 let ItemSchema = new Schema({
   name: {
     type: String,
-    unique: true,
     required: true
   },
   brand: {
@@ -33,6 +32,10 @@ let ItemSchema = new Schema({
   favorite: {
     type: Boolean,
     default: false
+  },
+  dateCreated: {
+    type: Date,
+    default: Date.now
   },
   talk: {
     type: Schema.Types.ObjectId,

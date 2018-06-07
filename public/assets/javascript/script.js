@@ -213,14 +213,66 @@ function smScreen() {
     $('.selected').fadeOut()
 }
 
-$(document).on("click", ".fa-star", function () {
+$(document).on('click', '.fa-star', function () {
     $(this)
         .toggleClass('text-dark far')
         .toggleClass('text-danger fas')
 
-        $.ajax({
-            method: 'PUT',
-            url: `/api/item/${$(this).attr('data-id')}`,
-            data: { favorite : $(this).hasClass('text-danger') }
-        }).then(function (data) {})
+    $.ajax({
+        method: 'PUT',
+        url: `/api/item/${$(this).attr('data-id')}`,
+        data: {
+            favorite: $(this).hasClass('text-danger')
+        }
+    }).then(function (data) {})
+})
+
+$(document).on('click', '.close-item', function () {
+    let cardId = $(this).attr('data-id')
+
+    $(`[data-id="${cardId}"]`).fadeOut(function () {
+        $(`[data-id="${cardId}"]`).remove()
+    })
+    $(`[data-id="talk-${cardId}"]`).fadeOut(function () {
+        $(`[data-id="talk-${cardId}"]`).remove()
+    })
+    $(`[data-id="shop-${cardId}"]`).fadeOut(function () {
+        $(`[data-id="shop-${cardId}"]`).remove()
+    })
+
+    if ($('.selected').length !== 0)
+        location.reload()
+
+    $.ajax({
+        method: 'DELETE',
+        url: `/api/item/${cardId}`,
+    }).then(function (data) {})
+})
+
+$(document).on('click', '.shoe-btn', function () {
+    $.get('/search/shoes')
+        .then(data => showFound())
+})
+
+$(document).on('click', '.bag-btn', function () {
+    $.get('/search/bags')
+        .then(data => showFound())
+})
+
+function showFound() {
+    $('.search-btn-row').fadeOut(function () {
+        $('.status-display').fadeIn(function() {
+            setTimeout(function () {
+                $('.status-display').fadeOut(function () {
+                    $('.found-row').fadeIn()
+                })
+            }, 1000)
+        })
+    })
+}
+
+$(document).on('click', '.found-btn', function () {
+    $('.found-row').fadeOut(function() {
+        $('.search-btn-row').fadeIn()
+    })
 })

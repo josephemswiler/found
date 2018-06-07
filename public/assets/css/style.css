@@ -15,7 +15,7 @@ html,
 body {
     height: auto;
     min-height: 100vh;
-    font-size: 12px;
+    font-size: 14px;
 }
 
 body {
@@ -26,6 +26,13 @@ body {
 
 .navbar-light {
     background: var(--pink) !important;
+}
+
+.text-brand {
+    color: var(--white);
+    font-family: var(--brand);
+    font-size: 20px;
+    letter-spacing: 4px;
 }
 
 .navbar-brand {
@@ -91,7 +98,8 @@ body {
 .talk-card,
 .talk-card-header,
 .shop-card,
-.shop-card-header {
+.shop-card-header,
+.radius-round {
     border-radius: 20px;
 }
 
@@ -100,8 +108,6 @@ body {
     overflow: auto;
     height: 100%;
 }
-
-
 
 .talk-card-header,
 .shop-card-header {
@@ -138,10 +144,6 @@ body {
     font-size: 14px;
 }
 
-.price-block {
-
-}
-
 .text-lg {
     font-size: 25px;
     font-family: var(--brand)
@@ -167,13 +169,27 @@ body {
     background: var(--pink);
 }
 
+.bg-blue {
+    background: var(--blue);
+}
+
+.bg-gold {
+    background: var(--gold);
+}
+
+.bg-aqua {
+    background: var(--aqua);
+}
+
 .outer-talk-card {
     min-height: 100%;
 }
 
 .outer-talk-card,
 .outer-shop-card,
-.back-col {
+.back-col,
+.found-row,
+.status-display {
     display: none;
 }
 
@@ -189,10 +205,18 @@ body {
 
 .fa-star {
     position: absolute;
-    left: 10px;
-    top: 10px;
+    left: 20px;
+    top: 20px;
     z-index: 3;
-    font-size: 25px;
+    font-size: 35px;
+}
+
+.close-item {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    z-index: 3;
+    font-size: 35px;
 }
 
 .text-dark {
@@ -205,4 +229,25 @@ body {
 
 .text-danger {
     color: var(--red);
+}
+
+.text-aqua {
+    color: var(--aqua);
+}
+
+.text-pink {
+    color: var(--pink);
+}
+
+.profile-photo {
+    border-radius: 50%;
+    width: 100%;
+}
+
+.i-lg {
+    font-size: 25px;
+}
+
+.welcome-text {
+    line-height: 27px;
 }

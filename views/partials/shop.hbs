@@ -1,0 +1,87 @@
+<div class="container body-wrapper">
+    <div class="row top-row">
+        {{#each items}}
+        <div class="card outer-card unselected-item bg-transparent col-lg-4 col-md-6 col-xl-3" data-id="{{_id}}">
+            <div class="card inner-card-img">
+                {{#if favorite}}
+                <i class="fas fa-star text-danger" data-id="{{_id}}" data-toggle="tooltip" data-placement="bottom" title="Remove from Favorites"></i>
+                {{else}}
+                <i class="far fa-star text-dark" data-id="{{_id}}" data-toggle="tooltip" data-placement="bottom" title="Add to Favorites"></i>
+                {{/if}}
+                <i class="far fa-times-circle close-item" data-id="{{_id}}" data-toggle="tooltip" data-placement="bottom" title="Delete Item"></i>
+                <img class="card-img-top" src="{{img}}" alt="card image">
+            </div>
+            <div class="row mt-3 mb-3">
+                <div class="col-6 shop-col action-col pr-2">
+                    <a href="#" class="btn btn-pill btn-block btn-primary btn-lg shop-btn p-3">SHOP</a>
+                </div>
+                <div class="col-6 talk-col action-col pl-2">
+                    <a href="#" class="btn btn-pill btn-block btn-danger btn-lg talk-btn p-3">TALK</a>
+                </div>
+                <div class="col-12 back-col">
+                    <a href="#" class="btn btn-pill btn-block btn-warning btn-lg back-btn p-3">BACK</a>
+                </div>
+            </div>
+        </div>
+        <!-- /.outer-card -->
+        <div class="outer-talk-card open-action-screen bg-transparent col-lg-8 col-md-6 col-xl-9" data-id="talk-{{_id}}">
+            <div class="card talk-card p-0">
+                <div class="card-header talk-card-header text-center">
+                    <span class="header-text">TALK</span>
+                    <span class="close-talk close-action text-red mr-4" data-toggle="tooltip" data-placement="bottom" title="Close Talk">
+                        <i class="fas fa-times-circle"></i>
+                    </span>
+                </div>
+                <div class="card-body talk-history mb-0 pb-0 pt-0">
+                    <div class="talk-block mt-3">
+                        Whoa! Great find! Talk about this item here, or return to the shopping page to shop this item!
+                    </div>
+                    {{> talk }}
+                </div>
+                <form class="talk-input-form mb-3 mr-3 ml-3 mt-3">
+                    <div class="form-group mt-0">
+                        <input type="text" class="form-control talk-input" placeholder="Say something...">
+                    </div>
+                </form>
+            </div>
+            <div class="row mt-3 mb-3">
+                <div class="col-12">
+                    <a href="#" class="btn btn-pill btn-block btn-danger btn-lg add-talk-btn p-3">ADD</a>
+                </div>
+            </div>
+        </div>
+        <div class="outer-shop-card open-action-screen bg-transparent col-lg-8 col-md-6 col-xl-9" data-id="shop-{{_id}}">
+            <div class="card shop-card p-0">
+                <div class="card-header shop-card-header text-center">
+                    <span class="header-text">SHOP</span>
+                    <span class="close-shop close-action text-red mr-4" data-toggle="tooltip" data-placement="bottom" title="Close Shop">
+                        <i class="fas fa-times-circle"></i>
+                    </span>
+                </div>
+                <div class="card-body shop-details text-center p-3 m-3">
+                    <div class="shop-item-title text-lg p-2">
+                        {{name}}
+                    </div>
+                    <div class="shop-item-brand text-md p-2">
+                        {{brand}}
+                    </div>
+                    <div class="shop-price m-3">
+                        <a href="{{url}}" target="_blank">
+                            <button type="button" class="btn btn-light btn-lg btn-pill p-3 w-50">$ {{price}}</button>
+                        </a>
+                    </div>
+                    <div class="shop-item-description mt-3 p-3 text-justify">
+                        {{description}}
+                    </div>
+                    <div class="gradient"></div>
+                </div>
+            </div>
+            <div class="row mt-3 mb-3">
+                <div class="col-12">
+                    <a href="{{url}}" class="btn btn-pill btn-block btn-primary btn-lg visit-btn p-3" target="_blank">VISIT SITE</a>
+                </div>
+            </div>
+        </div>
+        {{/each}}
+    </div>
+</div>

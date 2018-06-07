@@ -4,7 +4,7 @@ let cheerio = require('cheerio')
 
 module.exports = function (app) {
 
-    app.get('/search', function (req, res) {
+    app.get('/search/shoes', function (req, res) {
 
         axios.get('http://needsupply.com/womens/shoes?p=1').then(function (response) {
 
@@ -35,7 +35,47 @@ module.exports = function (app) {
 
                     db.Item.create(item)
                         .then(function (dbItem) {})
-                        .catch(err => res.json(err))
+                })
+            })
+        })
+        db.Item.find({})
+            .then(function (items) {
+                res.json(items)
+            })
+            .catch(err => res.json(err))
+    })
+
+    app.get('/search/bags', function (req, res) {
+
+        axios.get('http://needsupply.com/womens/bags?p=1').then(function (response) {
+
+            let $ = cheerio.load(response.data)
+
+            let items = []
+
+            $('article').each(function (i, element) {
+                let item = {}
+                item.name = $(this).attr('data-name')
+                item.brand = $(this).attr('data-brand')
+                item.price = $(this).attr('data-price')
+                item.url = $(this)
+                    .find('a')
+                    .attr('href')
+                item.img = $(this)
+                    .find('img')
+                    .attr('src')
+                item.altImg = $(this)
+                    .find('.alternate-image')
+                    .attr('data-src')
+
+                axios.get(item.url).then(function (response) {
+
+                    let $ = cheerio.load(response.data)
+
+                    item.description = $('.description').text().trim()
+
+                    db.Item.create(item)
+                        .then(function (dbItem) {})
                 })
             })
         })
@@ -47,15 +87,37 @@ module.exports = function (app) {
     })
 
     app.get('/', function (req, res) {
-        res.render('profile')
+        db.Item.find({
+                favorite: true
+            })
+            .populate("Talk")
+            .then(function (items) {
+                console.log(items)
+                res.render('profile', {
+                    items: items
+                })
+            })
+            .catch(err => res.json(err))
     })
 
     app.get('/profile', function (req, res) {
-        res.render('profile')
+        db.Item.find({
+                favorite: true
+            })
+            .populate("Talk")
+            .then(function (items) {
+                console.log(items)
+                res.render('profile', {
+                    items: items
+                })
+            })
+            .catch(err => res.json(err))
     })
 
     app.get('/index', function (req, res) {
-        db.Item.find({})
+        db.Item.find({}).sort({
+                dateCreated: -1
+            })
             .populate("Talk")
             .then(function (items) {
                 console.log(items)
@@ -91,15 +153,20 @@ module.exports = function (app) {
     })
 
     app.put("/api/item/:id", function (req, res) {
-        console.log(req.body.favorite, req.params.id)
         db.Item.findOneAndUpdate({
-            _id: req.params.id
-        }, {
-            favorite: req.body.favorite
-        }, {
-            new: false
-        })
+                _id: req.params.id
+            }, {
+                favorite: req.body.favorite
+            }, {
+                new: false
+            })
             .then(data => res.json(data))
             .catch(err => res.json(err))
+    })
+
+    app.delete("/api/item/:id", (req, res) => {
+        db.Item.findOneAndDelete({
+            _id: req.params.id
+        }).then(data => res.json(data))
     })
 }
