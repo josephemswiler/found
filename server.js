@@ -1,7 +1,6 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const mongoose = require('mongoose')
-const cheerio = require('cheerio')
 const expressHandlebars = require("express-handlebars")
 const path = require('path')
 let db = require('./models')

@@ -1,3 +1,6 @@
+//Document ready
+//-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-//
+
 let actionOpen = false
 
 $(function () {
@@ -17,6 +20,7 @@ $(function () {
 
     switch (window.location.pathname) {
         case '/':
+        case '/profile':
             $('[data-path="profile"]').addClass('text-blue')
             break
         case '/index':
@@ -43,6 +47,7 @@ $(window).resize(function () {
     if (actionOpen) {
         if ($(window).width() > 767) {
             $('.selected').fadeIn()
+            $('.profile-wrapper').fadeIn()
         } else {
             $('.selected').fadeOut()
         }
@@ -126,34 +131,49 @@ function sumbitTalk(cardId) {
         scrollTop: history.prop('scrollHeight')
     }, 300)
 
-    $.post(`/api/talk/${cardId}`, { text: div.text() })
+    $.post(`/api/talk/${cardId}`, {
+        text: div.text()
+    })
 
     $(`[data-id="talk-${cardId}"]`).find('.talk-input').val('')
 }
 
 $(document).on('click', '.back-btn', function () {
     $('.outer-talk-card').fadeOut()
+
     $('.outer-shop-card').fadeOut()
+
     $(this).parent().fadeOut(function () {
         $(this).closest('.top-row').find('.action-col').fadeIn()
     })
+
     $(this).closest('.outer-card').removeClass('selected').addClass('unselected-item')
+
     $('.unselected-item').fadeIn()
+    
     actionOpen = false
+
     if ($('.outer-card').css('display') === 'none')
         $('.outer-card').fadeIn()
 })
 
 $(document).on('click', '.close-action', function () {
     $('.outer-talk-card').fadeOut()
+
     $('.outer-shop-card').fadeOut()
+
     $('.back-btn').parent().fadeOut(function () {
         $(this).closest('.top-row').find('.action-col').fadeIn()
     })
 
     $(this).closest('.top-row').find('.selected').removeClass('selected').addClass('unselected-item')
+
     $('.unselected-item').fadeIn()
+
     actionOpen = false
+
+    $('.profile-wrapper').fadeIn()
+
     if ($('.outer-card').css('display') === 'none')
         $('.outer-card').fadeIn()
 })
@@ -162,10 +182,6 @@ $(document).on('click', '.close-action', function () {
 //-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-//
 
 $(document).on('click', '.shop-btn', function () {
-
-    // console.log($('[data-position="1"]').position())
-
-    // console.log($('[data-position="2"]').position())
 
     let cardId = $(this).closest('.outer-card').attr('data-id')
 
@@ -203,6 +219,7 @@ function shopHeight(cardId) {
 
 function smScreen() {
     $('.selected').fadeOut()
+    $('.profile-wrapper').fadeOut()
 }
 
 $(document).on('click', '.fa-star', function () {
@@ -249,14 +266,14 @@ $(document).on('click', '.shoe-btn', function () {
 $(document).on('click', '.bag-btn', function () {
     $.get('/search/bags')
         .then(response => {
-            console.log(response) 
+            console.log(response)
             showFound()
         })
 })
 
 function showFound() {
     $('.search-btn-row').fadeOut(function () {
-        $('.status-display').fadeIn(function() {
+        $('.status-display').fadeIn(function () {
             setTimeout(function () {
                 $('.status-display').fadeOut(function () {
                     $('.found-row').fadeIn()
@@ -267,7 +284,7 @@ function showFound() {
 }
 
 $(document).on('click', '.found-btn', function () {
-    $('.found-row').fadeOut(function() {
+    $('.found-row').fadeOut(function () {
         $('.search-btn-row').fadeIn()
     })
 })

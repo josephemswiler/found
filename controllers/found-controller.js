@@ -4,6 +4,9 @@ let cheerio = require('cheerio')
 
 module.exports = function (app) {
 
+    //Create items / web scraper
+    //-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-//
+
     app.get('/search/shoes', function (req, res) {
 
         axios.get('http://needsupply.com/womens/shoes?p=1').then(function (response) {
@@ -98,11 +101,34 @@ module.exports = function (app) {
             .catch(err => res.json(err))
     })
 
+    //Create talk
+    //-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-//
+
+    app.post("/api/talk/:id", function (req, res) {
+        db.Talk.create(req.body)
+            .then(dbTalk => db.Item.findOneAndUpdate({
+                _id: req.params.id
+            }, {
+                $push: {
+                    talk: dbTalk._id
+                }
+            }, {
+                new: true
+            }))
+            .then(data => res.json(data))
+            .catch(err => res.json(err))
+    })
+
+    //Read item
+    //-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-//
+
     app.get('/', function (req, res) {
         db.Item.find({
                 favorite: true
             })
-            .populate("talk")
+            .populate("talk").sort({
+                date: -1
+            })
             .then(function (items) {
                 res.render('profile', {
                     items: items
@@ -141,33 +167,8 @@ module.exports = function (app) {
             .catch(err => res.json(err))
     })
 
-    app.get('/api', function (req, res) {
-        db.Item.find({}).sort({
-                dateCreated: -1
-            })
-            .populate("talk").sort({
-                date: -1
-            })
-            .then(function (items) {
-                res.json(items)
-            })
-            .catch(err => res.json(err))
-    })
-
-    app.post("/api/talk/:id", function (req, res) {
-        db.Talk.create(req.body)
-            .then(dbTalk => db.Item.findOneAndUpdate({
-                _id: req.params.id
-            }, {
-                $push: {
-                    talk: dbTalk._id
-                }
-            }, {
-                new: true
-            }))
-            .then(data => res.json(data))
-            .catch(err => res.json(err))
-    })
+    //Update item
+    //-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-//
 
     app.put("/api/item/:id", function (req, res) {
         db.Item.findOneAndUpdate({
@@ -181,9 +182,28 @@ module.exports = function (app) {
             .catch(err => res.json(err))
     })
 
+    //Delete item
+    //-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-//
+
     app.delete("/api/item/:id", (req, res) => {
         db.Item.findOneAndDelete({
             _id: req.params.id
         }).then(data => res.json(data))
+    })
+
+    //API
+    //-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-//
+
+    app.get('/api', function (req, res) {
+        db.Item.find({}).sort({
+                dateCreated: -1
+            })
+            .populate("talk").sort({
+                date: -1
+            })
+            .then(function (items) {
+                res.json(items)
+            })
+            .catch(err => res.json(err))
     })
 }
