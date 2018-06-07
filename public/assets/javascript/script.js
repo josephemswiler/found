@@ -9,7 +9,7 @@ $(function () {
     $(window).keydown(function (event) {
         if (event.keyCode == 13) {
             event.preventDefault()
-            sumbitTalk($('.add-talk-btn'))
+            sumbitTalk($('.selected').attr('data-id'))
         }
     })
 
@@ -102,34 +102,41 @@ function talkHeight(cardId) {
 }
 
 $(document).on('click', '.add-talk-btn', function () {
-    sumbitTalk($(this))
+    sumbitTalk($('.selected').attr('data-id'))
 })
 
-function sumbitTalk(button) {
-    if (button.closest('.outer-talk-card').find('.talk-input').val().trim() === '')
+function sumbitTalk(cardId) {
+    if ($(`[data-id="talk-${cardId}"]`).find('.talk-input').val().trim() === '')
         return
 
-    let currentHeight = button.closest('.outer-talk-card').find('.talk-card').height()
+    let currentHeight = $(`[data-id="talk-${cardId}"]`).find('.talk-card').height()
 
     let div = $('<div>')
         .css('display', 'none')
         .addClass('talk-block mt-3 text-right bg-pink')
-        .text(button.closest('.outer-talk-card').find('.talk-input').val().trim())
+        .text($(`[data-id="talk-${cardId}"]`).find('.talk-input').val().trim())
 
-    button.closest('.outer-talk-card').find('.talk-card').animate({
+    $(`[data-id="talk-${cardId}"]`).find('.talk-card').animate({
         height: currentHeight + 53
     }, 300, function () {
-        $('.talk-history').append(div)
+        $(`[data-id="talk-${cardId}"]`).find('.talk-history').append(div)
         div.fadeIn()
     })
 
-    let history = button.closest('.outer-talk-card').find('.talk-history')
+    let history = $(`[data-id="talk-${cardId}"]`).find('.talk-history')
 
     history.animate({
         scrollTop: history.prop('scrollHeight')
     }, 300)
 
-    button.closest('.outer-talk-card').find('.talk-input').val('')
+    let postObj = {
+        date: new Date(),
+        text: div.text()
+    }
+
+    $.post(`/api/talk/${cardId}`, postObj)
+
+    $(`[data-id="talk-${cardId}"]`).find('.talk-input').val('')
 }
 
 $(document).on('click', '.back-btn', function () {

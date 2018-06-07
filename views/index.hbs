@@ -1,4 +1,4 @@
-{{> nav }}
+{{ > nav }}
 <div class="container body-wrapper">
     <div class="row top-row">
         {{#each items}}
@@ -18,7 +18,6 @@
                 </div>
             </div>
         </div>
-
         <!-- /.outer-card -->
         <div class="outer-talk-card open-action-screen bg-transparent col-lg-8 col-md-6" data-id="talk-{{_id}}">
             <div class="card talk-card p-0">
@@ -29,9 +28,7 @@
                     </span>
                 </div>
                 <div class="card-body talk-history mb-0 pb-0 pt-0">
-                    <div class="talk-block mt-3">
-                        Nice! Great find!
-                    </div>
+                    {{ > talk }}
                 </div>
                 <form class="talk-input-form mb-3 mr-3 ml-3 mt-3">
                     <div class="form-group mt-0">

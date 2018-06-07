@@ -46,7 +46,6 @@ module.exports = function (app) {
             .catch(err => res.json(err))
     })
 
-
     app.get('/', function (req, res) {
         res.render('profile')
     })
@@ -66,5 +65,23 @@ module.exports = function (app) {
         res.render('about')
     })
 
+    app.post('/api/talk', (req, res) => {
+        db.Talk.create({
+            date: req.body.date,
+            text: req.body.text
+        }).then(data => res.json(data))
+    })
 
+    app.post("/api/talk/:id", function (req, res) {
+        db.Talk.create(req.body)
+            .then(dbTalk => db.Item.findOneAndUpdate({
+                _id: req.params.id
+            }, {
+                note: dbTalk._id
+            }, {
+                new: true
+            }))
+            .then(data => res.json(data))
+            .catch(err => res.json(err))
+    })
 }
