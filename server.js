@@ -4,12 +4,9 @@ const mongoose = require('mongoose')
 const cheerio = require('cheerio')
 const expressHandlebars = require("express-handlebars")
 const path = require('path')
-
 let db = require('./models')
 let PORT = process.env.PORT || 3000
 let app = express()
-
-let MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost/founddb'
 
 const hbs = expressHandlebars.create({
     defaultLayout: 'main',
@@ -29,7 +26,11 @@ app.use(bodyParser.json())
 
 app.use(express.static('public'))
 
-mongoose.connect('mongodb://localhost/founddb')
+mongoose.Promise = Promise
+
+let MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost/founddb'
+
+mongoose.connect(MONGODB_URI)
 
 require('./controllers/found-controller.js')(app)
 
