@@ -4,7 +4,7 @@ let cheerio = require('cheerio')
 
 module.exports = function (app) {
 
-    app.get('/scrape', function (req, res) {
+    app.get('/search', function (req, res) {
 
         axios.get('http://needsupply.com/womens/shoes?p=1').then(function (response) {
 
@@ -50,8 +50,13 @@ module.exports = function (app) {
         res.render('profile')
     })
 
+    app.get('/profile', function (req, res) {
+        res.render('profile')
+    })
+
     app.get('/index', function (req, res) {
         db.Item.find({})
+            .populate("Talk")
             .then(function (items) {
                 console.log(items)
                 res.render('index', {
@@ -81,6 +86,19 @@ module.exports = function (app) {
             }, {
                 new: true
             }))
+            .then(data => res.json(data))
+            .catch(err => res.json(err))
+    })
+
+    app.put("/api/item/:id", function (req, res) {
+        console.log(req.body.favorite, req.params.id)
+        db.Item.findOneAndUpdate({
+            _id: req.params.id
+        }, {
+            favorite: req.body.favorite
+        }, {
+            new: false
+        })
             .then(data => res.json(data))
             .catch(err => res.json(err))
     })

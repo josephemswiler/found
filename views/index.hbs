@@ -1,9 +1,14 @@
-{{ > nav }}
+{{> nav }}
 <div class="container body-wrapper">
     <div class="row top-row">
         {{#each items}}
         <div class="card outer-card unselected-item bg-transparent col-lg-4 col-md-6" data-id="{{_id}}">
             <div class="card inner-card-img">
+                {{#if favorite}}
+                <i class="fas fa-star text-danger" data-id="{{_id}}" data-toggle="tooltip" data-placement="bottom" title="Remove from Favorites"></i>
+                {{else}}
+                <i class="far fa-star text-dark" data-id="{{_id}}" data-toggle="tooltip" data-placement="bottom" title="Add to Favorites"></i>
+                {{/if}}
                 <img class="card-img-top" src="{{img}}" alt="card image">
             </div>
             <div class="row mt-3 mb-3">
@@ -28,7 +33,7 @@
                     </span>
                 </div>
                 <div class="card-body talk-history mb-0 pb-0 pt-0">
-                    {{ > talk }}
+                    {{> talk }}
                 </div>
                 <form class="talk-input-form mb-3 mr-3 ml-3 mt-3">
                     <div class="form-group mt-0">

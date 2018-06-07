@@ -212,3 +212,15 @@ function shopHeight(cardId) {
 function smScreen() {
     $('.selected').fadeOut()
 }
+
+$(document).on("click", ".fa-star", function () {
+    $(this)
+        .toggleClass('text-dark far')
+        .toggleClass('text-danger fas')
+
+        $.ajax({
+            method: 'PUT',
+            url: `/api/item/${$(this).attr('data-id')}`,
+            data: { favorite : $(this).hasClass('text-danger') }
+        }).then(function (data) {})
+})
