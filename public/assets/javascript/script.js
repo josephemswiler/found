@@ -25,6 +25,8 @@ $(function () {
             break
         case '/index':
             $('[data-path="index"]').addClass('text-blue')
+            $('.found-row').hide() 
+            $('.search-btn-row').show()
             setHeight()
             break
     }
@@ -150,7 +152,7 @@ $(document).on('click', '.back-btn', function () {
     $(this).closest('.outer-card').removeClass('selected').addClass('unselected-item')
 
     $('.unselected-item').fadeIn()
-    
+
     actionOpen = false
 
     if ($('.outer-card').css('display') === 'none')
@@ -261,30 +263,23 @@ $(document).on('click', '.close-item', function () {
 $(document).on('click', '.shoe-btn', function () {
     $.get('/search/shoes')
         .then(data => showFound())
+
+        $('.search-btn-row').fadeOut(function () {
+            $('.status-display').fadeIn()
+        })
 })
 
 $(document).on('click', '.bag-btn', function () {
     $.get('/search/bags')
-        .then(response => {
-            console.log(response)
-            showFound()
-        })
+        .then(response => showFound())
+
+    $('.search-btn-row').fadeOut(function () {
+        $('.status-display').fadeIn()
+    })
 })
 
 function showFound() {
-    $('.search-btn-row').fadeOut(function () {
-        $('.status-display').fadeIn(function () {
-            setTimeout(function () {
-                $('.status-display').fadeOut(function () {
-                    $('.found-row').fadeIn()
-                })
-            }, 1000)
-        })
+    $('.status-display').fadeOut(function () {
+        $('.found-row').fadeIn()
     })
 }
-
-$(document).on('click', '.found-btn', function () {
-    $('.found-row').fadeOut(function () {
-        $('.search-btn-row').fadeIn()
-    })
-})

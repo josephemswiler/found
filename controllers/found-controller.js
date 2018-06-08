@@ -9,97 +9,108 @@ module.exports = function (app) {
 
     app.get('/search/shoes', function (req, res) {
 
-        axios.get('http://needsupply.com/womens/shoes?p=1').then(function (response) {
+        axios.get('https://needsupply.com/womens/shoes?p=1').then(function (response) {
 
             let $ = cheerio.load(response.data)
 
             let items = []
 
             $('article').each(function (i, element) {
-                let item = {}
-                item.name = $(this).attr('data-name')
-                item.brand = $(this).attr('data-brand')
-                item.price = $(this).attr('data-price')
-                item.url = $(this)
-                    .find('a')
-                    .attr('href')
-                item.img = $(this)
-                    .find('img')
-                    .attr('src')
-                item.altImg = $(this)
-                    .find('.alternate-image')
-                    .attr('data-src')
-
-                axios.get(item.url).then(function (response) {
-
-                    let $ = cheerio.load(response.data)
-
-                    item.description = $('.description').text().trim()
-
-                    db.Item.count({
-                        name: item.name
-                    }).then(count => {
-                        if (count === 0) {
-                            db.Item.create(item)
-                                .then(function (dbItem) {})
-                        }
+                db.Item.count({
+                        name: $(this).attr('data-name')
                     })
+                    .then(count => count === 0 ? true : false)
+                    .then(unique => {
+                        if (unique) {
+                            let item = {}
+                            item.name = $(this).attr('data-name')
+                            item.brand = $(this).attr('data-brand')
+                            item.price = $(this).attr('data-price')
+                            item.url = $(this)
+                                .find('a')
+                                .attr('href')
+                            item.img = $(this)
+                                .find('img')
+                                .attr('src')
+                            item.altImg = $(this)
+                                .find('.alternate-image')
+                                .attr('data-src')
+
+                            axios.get(item.url).then(function (response) {
+
+                                let $ = cheerio.load(response.data)
+
+                                item.description = $('.description').text().trim()
+
+                                db.Item.create(item)
+                                    .then(function (dbItem) {})
+                            })
+                        }
+                    }).then(data => data)
+            })
+        }).then(data => {
+            db.Item.find({})
+                .then(function (items) {
+                    res.json(items)
                 })
-            })
+                .catch(err => res.json(err))
         })
-        db.Item.find({})
-            .then(function (items) {
-                res.json(items)
-            })
-            .catch(err => res.json(err))
     })
 
     app.get('/search/bags', function (req, res) {
 
-        axios.get('http://needsupply.com/womens/bags?p=1').then(function (response) {
+        axios.get('https://needsupply.com/womens/bags?p=1').then(function (response) {
+
 
             let $ = cheerio.load(response.data)
 
             let items = []
 
             $('article').each(function (i, element) {
-                let item = {}
-                item.name = $(this).attr('data-name')
-                item.brand = $(this).attr('data-brand')
-                item.price = $(this).attr('data-price')
-                item.url = $(this)
-                    .find('a')
-                    .attr('href')
-                item.img = $(this)
-                    .find('img')
-                    .attr('src')
-                item.altImg = $(this)
-                    .find('.alternate-image')
-                    .attr('data-src')
-
-                axios.get(item.url).then(function (response) {
-
-                    let $ = cheerio.load(response.data)
-
-                    item.description = $('.description').text().trim()
-
-                    db.Item.count({
-                        name: item.name
-                    }).then(count => {
-                        if (count === 0) {
-                            db.Item.create(item)
-                                .then(function (dbItem) {})
-                        }
+                db.Item.count({
+                        name: $(this).attr('data-name')
                     })
+                    .then(count => count === 0 ? true : false)
+                    .then(unique => {
+                        if (unique) {
+                            let item = {}
+                            item.name = $(this).attr('data-name')
+                            item.brand = $(this).attr('data-brand')
+                            item.price = $(this).attr('data-price')
+                            item.url = $(this)
+                                .find('a')
+                                .attr('href')
+                            item.img = $(this)
+                                .find('img')
+                                .attr('src')
+                            item.altImg = $(this)
+                                .find('.alternate-image')
+                                .attr('data-src')
+
+                            axios.get(item.url).then(function (response) {
+
+                                let $ = cheerio.load(response.data)
+
+                                item.description = $('.description').text().trim()
+
+                                db.Item.create(item)
+                                    .then(function (dbItem) {})
+                            })
+                        }
+                    }).then(data => data)
+            })
+        }).then(data => {
+            db.Item.find({})
+                .then(function (items) {
+                    res.json(items)
                 })
-            })
+                .catch(err => res.json(err))
         })
-        db.Item.find({})
-            .then(function (items) {
-                res.json(items)
-            })
-            .catch(err => res.json(err))
     })
+
+    function webScraper() {
+
+    }
 
     //Create talk
     //-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-//
