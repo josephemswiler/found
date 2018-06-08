@@ -126,10 +126,10 @@ body {
 .close-talk,
 .close-shop {
     position: absolute;
-    font-size: 25px;
+    font-size: 35px;
     right: 0;
     letter-spacing: 0;
-    line-height: 55px;
+    line-height: 50px;
 }
 
 .text-red {
@@ -267,10 +267,6 @@ body {
 
 .btn-danger:hover {
     background: #EA2027;
-}
-
-.shoe-btn {
-    border: 4px solid var(--gold);
 }
 
 .close-item:hover {
