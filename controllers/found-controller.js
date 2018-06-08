@@ -56,48 +56,6 @@ module.exports = function (app) {
         }).then(data => res.send(data))
     })
 
-    // app.get('/search/bags', function (req, res) {
-
-    //     axios.get('https://needsupply.com/womens/bags?p=1').then(function (response) {
-
-    //         let $ = cheerio.load(response.data)
-
-    //         $('article').each(function (i, element) {
-    //             db.Item.count({
-    //                     name: $(this).attr('data-name')
-    //                 })
-    //                 .then(count => count === 0 ? true : false)
-    //                 .then(unique => {
-    //                     if (unique) {
-    //                         let item = {}
-    //                         item.name = $(this).attr('data-name')
-    //                         item.brand = $(this).attr('data-brand')
-    //                         item.price = $(this).attr('data-price')
-    //                         item.url = $(this)
-    //                             .find('a')
-    //                             .attr('href')
-    //                         item.img = $(this)
-    //                             .find('img')
-    //                             .attr('src')
-    //                         item.altImg = $(this)
-    //                             .find('.alternate-image')
-    //                             .attr('data-src')
-
-    //                         axios.get(item.url).then(function (response) {
-
-    //                             let $ = cheerio.load(response.data)
-
-    //                             item.description = $('.description').text().trim()
-
-    //                             db.Item.create(item)
-    //                                 .then(function (dbItem) {})
-    //                         })
-    //                     }
-    //                 }).then(data => data)
-    //         })
-    //     }).then(data => res.send(data))
-    // })
-
     //Create talk
     //-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-//
 

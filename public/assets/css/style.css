@@ -272,3 +272,11 @@ body {
 .shoe-btn {
     border: 4px solid var(--gold);
 }
+
+.close-item:hover {
+    color: var(--red);
+}
+
+.close-action:hover {
+    color: var(--blue);
+}
