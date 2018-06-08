@@ -1,4 +1,4 @@
-const mongoose = require("mongoose")
+const mongoose = require('mongoose')
 
 let Schema = mongoose.Schema
 
@@ -39,10 +39,10 @@ let ItemSchema = new Schema({
   },
   talk: [{
     type: Schema.Types.ObjectId,
-    ref: "Talk"
+    ref: 'Talk'
   }]
 })
 
-let Item = mongoose.model("Item", ItemSchema)
+let Item = mongoose.model('Item', ItemSchema)
 
 module.exports = Item

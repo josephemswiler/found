@@ -25,7 +25,7 @@ $(function () {
             break
         case '/index':
             $('[data-path="index"]').addClass('text-blue')
-            $('.found-row').hide() 
+            $('.found-row').hide()
             $('.search-btn-row').show()
             setHeight()
             break
@@ -264,9 +264,9 @@ $(document).on('click', '.shoe-btn', function () {
     $.get('/search/shoes')
         .then(data => showFound())
 
-        $('.search-btn-row').fadeOut(function () {
-            $('.status-display').fadeIn()
-        })
+    $('.search-btn-row').fadeOut(function () {
+        $('.status-display').fadeIn()
+    })
 })
 
 $(document).on('click', '.bag-btn', function () {

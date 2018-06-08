@@ -23,7 +23,6 @@
                 </div>
             </div>
         </div>
-        <!-- /.outer-card -->
         <div class="outer-talk-card open-action-screen bg-transparent col-lg-8 col-md-6 col-xl-9" data-id="talk-{{_id}}">
             <div class="card talk-card p-0">
                 <div class="card-header talk-card-header text-center">
@@ -36,7 +35,11 @@
                     <div class="talk-block mt-3">
                         Whoa! Great find! Talk about this item here, or return to the shopping page to shop this item!
                     </div>
-                    {{> talk }}
+                    {{#each talk}}
+                    <div class="talk-block mt-3">
+                        {{text}}
+                    </div>
+                    {{/each}}
                 </div>
                 <form class="talk-input-form mb-3 mr-3 ml-3 mt-3">
                     <div class="form-group mt-0">

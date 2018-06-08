@@ -1,4 +1,4 @@
-const mongoose = require("mongoose")
+const mongoose = require('mongoose')
 
 let Schema = mongoose.Schema
 
@@ -13,6 +13,6 @@ let TalkSchema = new Schema({
       }
 })
 
-let Talk = mongoose.model("Talk", TalkSchema)
+let Talk = mongoose.model('Talk', TalkSchema)
 
 module.exports = Talk

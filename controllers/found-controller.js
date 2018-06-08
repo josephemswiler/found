@@ -13,8 +13,6 @@ module.exports = function (app) {
 
             let $ = cheerio.load(response.data)
 
-            let items = []
-
             $('article').each(function (i, element) {
                 db.Item.count({
                         name: $(this).attr('data-name')
@@ -48,23 +46,14 @@ module.exports = function (app) {
                         }
                     }).then(data => data)
             })
-        }).then(data => {
-            db.Item.find({})
-                .then(function (items) {
-                    res.json(items)
-                })
-                .catch(err => res.json(err))
-        })
+        }).then(data => res.send(data))
     })
 
     app.get('/search/bags', function (req, res) {
 
         axios.get('https://needsupply.com/womens/bags?p=1').then(function (response) {
 
-
             let $ = cheerio.load(response.data)
-
-            let items = []
 
             $('article').each(function (i, element) {
                 db.Item.count({
@@ -99,18 +88,8 @@ module.exports = function (app) {
                         }
                     }).then(data => data)
             })
-        }).then(data => {
-            db.Item.find({})
-                .then(function (items) {
-                    res.json(items)
-                })
-                .catch(err => res.json(err))
-        })
+        }).then(data => res.send(data))
     })
-
-    function webScraper() {
-
-    }
 
     //Create talk
     //-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-//
