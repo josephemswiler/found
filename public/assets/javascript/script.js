@@ -260,17 +260,26 @@ $(document).on('click', '.close-item', function () {
     }).then(function (data) {})
 })
 
-$(document).on('click', '.shoe-btn', function () {
-    $.get('/search/shoes')
-        .then(data => showFound())
+// $(document).on('click', '.shoe-btn', function () {
+//     $.get('/search/shoes')
+//         .then(data => showFound())
 
-    $('.search-btn-row').fadeOut(function () {
-        $('.status-display').fadeIn()
-    })
-})
+//     $('.search-btn-row').fadeOut(function () {
+//         $('.status-display').fadeIn()
+//     })
+// })
 
-$(document).on('click', '.bag-btn', function () {
-    $.get('/search/bags')
+// $(document).on('click', '.bag-btn', function () {
+//     $.get('/search/bags')
+//         .then(response => showFound())
+
+//     $('.search-btn-row').fadeOut(function () {
+//         $('.status-display').fadeIn()
+//     })
+// })
+
+$(document).on('click', '.shop-search-btn', function () {
+    $.get(`/search/${$(this).attr('data-search')}`)
         .then(response => showFound())
 
     $('.search-btn-row').fadeOut(function () {

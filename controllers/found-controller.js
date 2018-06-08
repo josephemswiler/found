@@ -7,11 +7,17 @@ module.exports = function (app) {
     //Create items / web scraper
     //-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-//
 
-    app.get('/search/shoes', function (req, res) {
+    app.get('/search/:searchItem', function (req, res) {
 
-        axios.get('https://needsupply.com/womens/shoes?p=1').then(function (response) {
+        let term = req.params.searchItem
+
+        if (term === 'outerwear' || term === 'dressess')
+            term = `clothing/${term}`
+
+        axios.get(`https://needsupply.com/womens/${term}?p=1`).then(function (response) {
 
             let $ = cheerio.load(response.data)
+            let counter = 1
 
             $('article').each(function (i, element) {
                 db.Item.count({
@@ -19,7 +25,8 @@ module.exports = function (app) {
                     })
                     .then(count => count === 0 ? true : false)
                     .then(unique => {
-                        if (unique) {
+                        if (unique && counter < 5) {
+                            counter++
                             let item = {}
                             item.name = $(this).attr('data-name')
                             item.brand = $(this).attr('data-brand')
@@ -49,47 +56,47 @@ module.exports = function (app) {
         }).then(data => res.send(data))
     })
 
-    app.get('/search/bags', function (req, res) {
+    // app.get('/search/bags', function (req, res) {
 
-        axios.get('https://needsupply.com/womens/bags?p=1').then(function (response) {
+    //     axios.get('https://needsupply.com/womens/bags?p=1').then(function (response) {
 
-            let $ = cheerio.load(response.data)
+    //         let $ = cheerio.load(response.data)
 
-            $('article').each(function (i, element) {
-                db.Item.count({
-                        name: $(this).attr('data-name')
-                    })
-                    .then(count => count === 0 ? true : false)
-                    .then(unique => {
-                        if (unique) {
-                            let item = {}
-                            item.name = $(this).attr('data-name')
-                            item.brand = $(this).attr('data-brand')
-                            item.price = $(this).attr('data-price')
-                            item.url = $(this)
-                                .find('a')
-                                .attr('href')
-                            item.img = $(this)
-                                .find('img')
-                                .attr('src')
-                            item.altImg = $(this)
-                                .find('.alternate-image')
-                                .attr('data-src')
+    //         $('article').each(function (i, element) {
+    //             db.Item.count({
+    //                     name: $(this).attr('data-name')
+    //                 })
+    //                 .then(count => count === 0 ? true : false)
+    //                 .then(unique => {
+    //                     if (unique) {
+    //                         let item = {}
+    //                         item.name = $(this).attr('data-name')
+    //                         item.brand = $(this).attr('data-brand')
+    //                         item.price = $(this).attr('data-price')
+    //                         item.url = $(this)
+    //                             .find('a')
+    //                             .attr('href')
+    //                         item.img = $(this)
+    //                             .find('img')
+    //                             .attr('src')
+    //                         item.altImg = $(this)
+    //                             .find('.alternate-image')
+    //                             .attr('data-src')
 
-                            axios.get(item.url).then(function (response) {
+    //                         axios.get(item.url).then(function (response) {
 
-                                let $ = cheerio.load(response.data)
+    //                             let $ = cheerio.load(response.data)
 
-                                item.description = $('.description').text().trim()
+    //                             item.description = $('.description').text().trim()
 
-                                db.Item.create(item)
-                                    .then(function (dbItem) {})
-                            })
-                        }
-                    }).then(data => data)
-            })
-        }).then(data => res.send(data))
-    })
+    //                             db.Item.create(item)
+    //                                 .then(function (dbItem) {})
+    //                         })
+    //                     }
+    //                 }).then(data => data)
+    //         })
+    //     }).then(data => res.send(data))
+    // })
 
     //Create talk
     //-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-//
