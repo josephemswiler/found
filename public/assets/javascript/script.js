@@ -291,3 +291,9 @@ function showFound() {
         $('.found-row').fadeIn()
     })
 }
+
+$(document).on('click', '.found-btn', function() {
+    setTimeout(function() {
+        location.href = '/index'
+      }, 1000)
+})
