@@ -1,6 +1,6 @@
 # F O U N D
 
-F O U N D is a web scraper that compiles all the latest fashion from around the web in one place!
+Found is a web scraper that compiles all the latest fashion from around the web in one place!
 
 See the project here: [F O U N D](https://found-jfe.herokuapp.com/ "F O U N D").
 
